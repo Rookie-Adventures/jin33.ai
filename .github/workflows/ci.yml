@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: windows-latest
 
+    defaults:
+      run:
+        working-directory: ./jin33-frontend
+
     strategy:
       matrix:
         node-version: [22.12.0]
@@ -22,23 +26,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: './jin33-frontend/package-lock.json'
 
       - name: Install dependencies
-        run: |
-          cd jin33-frontend
-          npm ci
+        run: npm ci
 
       - name: Type check
-        run: |
-          cd jin33-frontend
-          npm run type-check
+        run: npm run type-check
 
       - name: Lint
-        run: |
-          cd jin33-frontend
-          npm run lint
+        run: npm run lint
 
       - name: Build
-        run: |
-          cd jin33-frontend
-          npm run build
+        run: npm run build
