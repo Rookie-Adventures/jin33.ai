@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { Message, Chat, ChatState } from '@/types/chat.types';
+import { Chat, ChatState, Message } from '@/types/chat.types';
 import { v4 as uuidv4 } from 'uuid';
+import { create } from 'zustand';
 
 const initialState: ChatState = {
   chats: [],
@@ -26,15 +26,15 @@ export const useChatStore = create<ChatState>((set, get) => ({
       timestamp: new Date().toISOString(),
     };
 
-    set((state) => ({
+    set(() => ({
       currentChat: {
         ...currentChat,
-        messages: [...currentChat.messages, newMessage],
+    messages: [...currentChat.messages, newMessage],
       },
     }));
   },
 
-  createChat: (title: string = '新对话') => {
+  createChat: (title = '新对话') => {
     const newChat: Chat = {
       id: uuidv4(),
       title,

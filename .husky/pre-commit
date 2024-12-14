@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 前端代码检查
+cd jin33-frontend
+npm run lint
+npm run type-check
+
+# 后端代码检查
+cd ../jin33-backend
+npm run lint

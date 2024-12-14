@@ -1,17 +1,29 @@
-import * as React from 'react';
-import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
+import React from 'react';
+import { Button as MuiButton } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import type { ButtonProps } from './Button.types';
+import { getButtonStyles } from './Button.styles';
 
-interface ButtonProps extends Omit<MuiButtonProps, 'variant'> {
-  variant?: 'primary' | 'secondary';
-}
+const Button: React.FC<ButtonProps> = ({
+  variant = 'primary',
+  className,
+  children,
+  ...props
+}) => {
+  const theme = useTheme();
+  const styles = getButtonStyles(theme);
 
-const Button: React.FC<ButtonProps> = ({ variant = 'primary', ...props }) => {
   return (
     <MuiButton
       {...props}
-      variant="contained"
-      color={variant === 'primary' ? 'primary' : 'secondary'}
-    />
+      className={className}
+      sx={{
+        ...styles.root,
+        ...(variant === 'primary' ? styles.primary : styles.secondary),
+      }}
+    >
+      {children}
+    </MuiButton>
   );
 };
 

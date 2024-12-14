@@ -1,40 +1,47 @@
 import React from 'react';
-import { CircularProgress, Box } from '@mui/material';
-import type { CircularProgressProps } from '@mui/material';
-
-interface LoadingProps {
-  fullscreen?: boolean;
-  size?: number;
-  color?: CircularProgressProps['color'];
-}
+import { CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { LoadingProps } from './Loading.types';
+import { getLoadingStyles } from './Loading.styles';
 
 const Loading: React.FC<LoadingProps> = ({
-  fullscreen = false,
   size = 40,
-  color = 'primary'
+  color = 'primary',
+  overlay = false,
+  centered = false,
+  className,
+  ...props
 }) => {
-  if (!fullscreen) {
-    return <CircularProgress size={size} color={color} />;
-  }
+  const theme = useTheme();
+  const styles = getLoadingStyles(theme);
 
-  return (
+  const content = (
     <Box
-      sx={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-        zIndex: 9999
-      }}
+      data-testid="loading-container"
+      className={className}
+      sx={centered ? styles.centered : styles.container}
     >
-      <CircularProgress size={size} color={color} />
+      <CircularProgress
+        size={size}
+        color={color}
+        {...props}
+      />
     </Box>
   );
+
+  if (overlay) {
+    return (
+      <Box
+        data-testid="loading-overlay"
+        sx={styles.overlay}
+      >
+        {content}
+      </Box>
+    );
+  }
+
+  return content;
 };
 
 export default Loading;

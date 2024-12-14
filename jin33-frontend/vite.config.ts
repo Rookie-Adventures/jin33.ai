@@ -1,26 +1,36 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import path from 'path';
+import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': resolve(__dirname, './src'),
+      '@test': resolve(__dirname, './test'),
+      '@mocks': resolve(__dirname, './test/__mocks__')
     }
   },
   server: {
     port: 3001,
+    open: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:4000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
+      },
+      '/socket.io': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
       },
     },
   },
   build: {
+    outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
       output: {

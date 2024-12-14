@@ -1,19 +1,16 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createTheme } from '@mui/material/styles';
+import create from 'zustand';
 
-export interface ThemeState {
-  isDarkMode: boolean;
-  toggleTheme: () => void;
-}
+const theme = createTheme({
+  palette: {
+    mode: 'light', // or 'dark'
+  },
+  // other theme configurations
+});
 
-export const useThemeStore = create<ThemeState>()(
-  persist(
-    (set) => ({
-      isDarkMode: false,
-      toggleTheme: () => set((state) => ({ isDarkMode: !state.isDarkMode })),
-    }),
-    {
-      name: 'theme-storage',
-    }
-  )
-);
+const useThemeStore = create<{ isDarkMode: boolean; toggleTheme: () => void }>(set => ({
+  isDarkMode: false,
+  toggleTheme: () => set(state => ({ isDarkMode: !state.isDarkMode })),
+}));
+
+export { theme, useThemeStore };

@@ -27,8 +27,8 @@ export const checkHealth = (): HealthStatus => {
   }
 
   // 检查认证状态
-  const token = storage.get('token');
-  const user = storage.get('user');
+  const token = storage.get('token') as string | null;
+  const user = storage.get('user') as unknown;
 
   return {
     auth: {

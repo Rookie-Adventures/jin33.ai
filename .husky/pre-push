@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 前端测试
+cd jin33-frontend
+npm run test
+
+# 后端测试
+cd ../jin33-backend
+npm run test

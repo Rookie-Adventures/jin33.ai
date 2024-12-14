@@ -1,0 +1,166 @@
+// .cursorrules
+开发顺序：
+  
+  全局基础设施-中间层-业务层-UI层
+
+  jin33.ai/docs/里面有详细说明/
+
+{
+  "architecture": {
+    "pattern": "前后端分离",
+    "frontend": {
+      "type": "React SPA",
+      "versions": {
+        "react": "18.2.0",
+        "typescript": "5.3.3",
+        "mui": "5.16.9",
+        "reduxToolkit": "2.0.1",
+        "zustand": "4.4.7"
+      }
+    },
+    "backend": {
+      "type": "Node.js服务",
+      "versions": {
+        "node": "22.12.0",
+        "express": "4.21.2",
+        "mongodb": "7.0.4",
+        "redis": "7.2.3"
+      }
+    }
+  },
+
+  "codeStyle": {
+    "function": {
+      "maxLines": 15,        // 单函数最大行数
+      "maxParams": 4,        // 最大参数数量
+      "maxNesting": 4,       // 最大嵌套层级
+      "returnExplicit": true  // 必须显式返回
+    }
+  },
+
+  "structure": {
+    "frontend": {
+      "components": {
+        "directory": "src/components/",
+        "description": "组件目录，包含通用和业务组件",
+        "tests": "每个组件目录下有 __tests__ 文件夹，存放测试文件"
+      },
+      "pages": {
+        "directory": "src/pages/",
+        "description": "页面组件目录，包含各个页面的实现和测试"
+      },
+      "hooks": {
+        "directory": "src/hooks/",
+        "description": "全局钩子，包含自定义钩子和测试"
+      },
+      "services": {
+        "directory": "src/services/",
+        "description": "API 服务，包含与后端交互的逻辑"
+      },
+      "store": {
+        "directory": "src/store/",
+        "description": "状态管理，包含 Redux 或其他状态管理逻辑"
+      },
+      "utils": {
+        "directory": "src/utils/",
+        "description": "工具函数，包含通用的辅助函数和测试"
+      },
+      "types": {
+        "directory": "src/types/",
+        "description": "类型定义，包含全局类型和接口"
+      },
+      "theme": {
+        "directory": "src/theme/",
+        "description": "主题配置，包含样式和主题相关的文���"
+      }
+    },
+    "backend": {
+      "config": {
+        "directory": "src/config/",
+        "description": "配置文件，包含应用和数据库的配置"
+      },
+      "controllers": {
+        "directory": "src/controllers/",
+        "description": "控制器，处理请求和响应"
+      },
+      "services": {
+        "directory": "src/services/",
+        "description": "服务层，包含业务逻辑"
+      },
+      "models": {
+        "directory": "src/models/",
+        "description": "数据模型，定义与数据库交互的结构"
+      },
+      "routes": {
+        "directory": "src/routes/",
+        "description": "路由，定义 API 路由"
+      },
+      "utils": {
+        "directory": "src/utils/",
+        "description": "工具函数，包含通用的辅助函数"
+      },
+      "types": {
+        "directory": "src/types/",
+        "description": "类型定义，包含全局类型和接口"
+      },
+      "middleware": {
+        "directory": "src/middleware/",
+        "description": "中间件，处理请求的预处理或后处理逻辑"
+      }
+    }
+  },
+
+  "naming": {
+    "files": {
+      "components": "*.tsx",
+      "services": "*.ts",
+      "models": "*.ts",
+      "controllers": "*.ts",
+      "routes": "*.ts",
+      "utils": "*.ts",
+      "types": "*.ts"
+    },
+    "tests": {
+      "suffix": ".test.tsx",
+      "directory": "__tests__"
+    }
+  },
+
+  "testing": {
+    "framework": "Jest",
+    "coverage": {
+      "statements": 80,
+      "branches": 80,
+      "functions": 90,
+      "lines": 80
+    },
+    "setup": "setupTests.ts"
+  },
+
+  "comments": {
+    "functionDoc": true,    // 函数必须有文档注释
+    "complexLogic": true,   // 复杂逻辑必须注释
+    "format": "JSDoc",      // 使用JSDoc格式
+    "required": [
+      "@param",
+      "@returns",
+      "@throws"
+    ]
+  },
+
+  "typescript": {
+    "strict": true,           // 严格模式
+    "noImplicitAny": true,   // 禁止隐式any
+    "noUnusedVars": true,    // 禁止未使用变量
+    "preferInterface": true,  // 优先使用接口
+    "typeGuards": true       // 使用类型守卫
+  },
+
+  "quality": {
+    "maxFileLines": 500,     // 单文件最大行数
+    "duplicateThreshold": 10, // 重复代码阈值
+    "complexity": {
+      "maxCyclomatic": 10    // 最大圈复杂度
+    }
+  }
+}

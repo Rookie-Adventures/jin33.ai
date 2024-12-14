@@ -1,41 +1,39 @@
-const PREFIX = 'jin33_';
+import { logger } from './logger';
 
-export const storage = {
-  get<T>(key: string): T | null {
+const storage = {
+  get(key: string) {
     try {
-      const item = localStorage.getItem(PREFIX + key);
+      const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : null;
     } catch (error) {
-      console.error(`Error getting item ${key} from localStorage:`, error);
+      logger.error('Error getting data from localStorage:', error);
       return null;
     }
   },
 
-  set(key: string, value: any): void {
+  set(key: string, value: any) {
     try {
-      localStorage.setItem(PREFIX + key, JSON.stringify(value));
+      localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error(`Error setting item ${key} in localStorage:`, error);
+      logger.error('Error saving data to localStorage:', error);
     }
   },
 
-  remove(key: string): void {
+  remove(key: string) {
     try {
-      localStorage.removeItem(PREFIX + key);
+      localStorage.removeItem(key);
     } catch (error) {
-      console.error(`Error removing item ${key} from localStorage:`, error);
+      logger.error('Error removing data from localStorage:', error);
     }
   },
 
-  clear(): void {
+  clear() {
     try {
-      Object.keys(localStorage).forEach(key => {
-        if (key.startsWith(PREFIX)) {
-          localStorage.removeItem(key);
-        }
-      });
+      localStorage.clear();
     } catch (error) {
-      console.error('Error clearing localStorage:', error);
+      logger.error('Error clearing localStorage:', error);
     }
   }
 };
+
+export { storage };

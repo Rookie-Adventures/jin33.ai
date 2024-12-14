@@ -1,12 +1,20 @@
-import { create } from 'zustand';
-import { AuthState, User } from '@/types';
+import type { User } from '@/types/auth.types';
 import { storage } from '@/utils/storage';
+import { create } from 'zustand';
 
-const useAuthStore = create<AuthState>((set) => ({
+export interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+  token: string | null;
+  login: (user: User, token: string) => void;
+  logout: () => void;
+  error: string | null;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
   user: storage.get('user'),
   token: storage.get('token'),
   isAuthenticated: !!storage.get('token'),
-  loading: false,
   error: null,
 
   login: (user: User, token: string) => {
@@ -35,5 +43,3 @@ const useAuthStore = create<AuthState>((set) => ({
     set({ error });
   }
 }));
-
-export { useAuthStore };

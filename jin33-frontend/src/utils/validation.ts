@@ -1,21 +1,23 @@
-import { LoginParams, RegisterParams } from '@/types';
+import { LoginParams, RegisterParams } from '../types/auth.types';
 
 // 邮箱验证
 export const isValidEmail = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email) return false;
+  // 更严格的邮箱验证规则
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailRegex.test(email);
 };
 
 // 密码强度验证
 export const isValidPassword = (password: string): boolean => {
-  // 至少8位，包含大小写字母和数字
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  if (!password) return false;
+  // 至少8个字符，包含大小写字母和数字
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   return passwordRegex.test(password);
 };
 
 // 用户名验证
 export const isValidUsername = (username: string): boolean => {
-  // 3-20位，只能包含字母、数字、下划线
   const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
   return usernameRegex.test(username);
 };
@@ -43,15 +45,19 @@ export const getValidationError = (field: string, value: string): string | null 
 };
 
 export const validateLoginForm = (data: LoginParams): string | null => {
-  if (!data.username || !data.password) {
+  if (!data.email || !data.password) {
     return '请填写所有必填字段';
   }
   return null;
 };
 
 export const validateRegisterForm = (data: RegisterParams): string | null => {
-  if (!data.username || !data.password || !data.confirmPassword) {
+  if (!data.email || !data.password || !data.confirmPassword) {
     return '请填写所有必填字段';
+  }
+
+  if (!isValidEmail(data.email)) {
+    return '请输入有效的邮箱地址';
   }
 
   if (data.password !== data.confirmPassword) {
