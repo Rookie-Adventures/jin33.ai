@@ -1,0 +1,39 @@
+# .deepsource.toml configuration for DeepSource static analysis
+
+version = 2
+
+# Enable or disable various DeepSource checks
+[analysis]
+enabled = true
+
+# Exclude specific files or directories from analysis
+[exclude]
+files = ["**/node_modules/**", "**/dist/**", "**/public/**", "**/test-utils/**"]
+
+# Global configuration for all checks
+[checks]
+# Enable/Disable specific checks
+# This is just an example; you can enable/disable as needed
+unused_imports = true
+unused_variables = true
+complexity = true
+lines_of_code = 500
+max_cyclomatic_complexity = 10
+max_nesting_depth = 3
+
+# You can customize each type of check further, e.g., for 'complexity' checks
+[checks.complexity]
+max_lines_of_code = 500
+max_function_lines = 15
+max_nesting_depth = 4
+max_cyclomatic_complexity = 10
+
+# Configure warning levels (for visibility in the DeepSource UI)
+[analysis.warning]
+# Set warning severity levels for each rule
+max_complexity = "error"
+max_nesting_depth = "warn"
+
+# To enforce coding style and best practices
+[style]
+strict_mode = true
